@@ -7,6 +7,8 @@ const {
   getProducts,
   getSingleProduct,
   updateProduct,
+  insertProductIntoCart,
+  getCartProducts,
 } = require("./Controller/controller");
 const { run } = require("./DB/db");
 const app = express();
@@ -22,6 +24,8 @@ app.get("/api/products", getProducts);
 app.get("/api/products/:id", getSingleProduct);
 app.post("/api/products", insertProduct);
 app.put("/api/products/:id", updateProduct);
+app.post("/api/cartproducts", insertProductIntoCart);
+app.get("/api/cartproducts", getCartProducts);
 
 //ping connection check of mongodb
 run();

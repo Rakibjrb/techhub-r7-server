@@ -4,6 +4,7 @@ const {
   closedb,
   productsCollection,
   ObjectId,
+  myCartCollection,
 } = require("../DB/db");
 const sendResponse = require("../Response/response");
 
@@ -57,7 +58,6 @@ const getSingleProduct = async (req, res) => {
     sendResponse(res, 200, result, "Item Found for this id ......");
   } catch (error) {
     sendResponse(res, 201, {}, "An error accured !!!");
-    console.log(error);
   } finally {
     await closedb();
   }
@@ -91,6 +91,31 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const insertProductIntoCart = async (req, res) => {
+  const product = req.body;
+  try {
+    await connectdb();
+    const result = await myCartCollection.insertOne(product);
+    sendResponse(res, 200, result, "added the product to your cart ....");
+  } catch (error) {
+    sendResponse(res, 201, [], "An error accured !!!");
+  } finally {
+    await closedb();
+  }
+};
+
+const getCartProducts = async (req, res) => {
+  try {
+    await connectdb();
+    const result = await myCartCollection.find().toArray();
+    sendResponse(res, 200, result, "Successfully get all products data ....");
+  } catch (error) {
+    sendResponse(res, 201, [], "An error accured !!!");
+  } finally {
+    await closedb();
+  }
+};
+
 module.exports = {
   serverResponse,
   insertProduct,
@@ -98,4 +123,6 @@ module.exports = {
   getProducts,
   getSingleProduct,
   updateProduct,
+  insertProductIntoCart,
+  getCartProducts,
 };
