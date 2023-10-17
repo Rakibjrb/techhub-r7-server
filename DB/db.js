@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.e9dao1z.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -31,6 +31,7 @@ const run = async () => {
 module.exports = {
   run,
   client,
+  ObjectId,
   connectdb,
   closedb,
   brandsCollection,
