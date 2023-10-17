@@ -11,6 +11,7 @@ const client = new MongoClient(uri, {
 });
 
 const brandsCollection = client.db("techHubBD").collection("brands");
+const productsCollection = client.db("techHubBD").collection("products");
 
 const connectdb = () => client.connect();
 const closedb = () => client.close();
@@ -27,4 +28,11 @@ const run = async () => {
   }
 };
 
-module.exports = { run, client, connectdb, closedb, brandsCollection };
+module.exports = {
+  run,
+  client,
+  connectdb,
+  closedb,
+  brandsCollection,
+  productsCollection,
+};

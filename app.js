@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const {
   serverResponse,
-  insertBrands,
   getBrands,
+  insertProduct,
+  getProducts,
 } = require("./Controller/controller");
 const { run } = require("./DB/db");
 const app = express();
@@ -14,8 +15,9 @@ app.use(express.json());
 
 //all api routes
 app.get("/", serverResponse);
-app.post("/api/brands", insertBrands);
 app.get("/api/brands", getBrands);
+app.get("/api/products", getProducts);
+app.post("/api/products", insertProduct);
 
 //ping connection check of mongodb
 run();

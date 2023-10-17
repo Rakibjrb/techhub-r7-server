@@ -1,4 +1,9 @@
-const { brandsCollection, connectdb, closedb } = require("../DB/db");
+const {
+  brandsCollection,
+  connectdb,
+  closedb,
+  productsCollection,
+} = require("../DB/db");
 const sendResponse = require("../Response/response");
 
 const serverResponse = async (req, res) => {
@@ -17,12 +22,12 @@ const getBrands = async (req, res) => {
   }
 };
 
-const insertBrands = async (req, res) => {
-  const brandData = req.body;
+const insertProduct = async (req, res) => {
+  const productData = req.body;
   try {
     await connectdb();
-    const result = await brandsCollection.insertOne(brandData);
-    sendResponse(res, 200, result, "Successfully get brand data ....");
+    const result = await productsCollection.insertOne(productData);
+    sendResponse(res, 200, result, "Successfully added a product ....");
   } catch (error) {
     sendResponse(res, 201, [], "An error accured !!!");
   } finally {
@@ -30,4 +35,22 @@ const insertBrands = async (req, res) => {
   }
 };
 
-module.exports = { serverResponse, insertBrands, getBrands };
+const getProducts = async (req, res) => {
+  try {
+    await connectdb();
+    const result = await productsCollection.find().toArray();
+    sendResponse(res, 200, result, "Successfully get all products data ....");
+  } catch (error) {
+    sendResponse(res, 201, [], "An error accured !!!");
+  } finally {
+    await closedb();
+  }
+};
+
+module.exports = {
+  serverResponse,
+  insertProduct,
+  getBrands,
+  getProducts,
+  deleteProduct,
+};
