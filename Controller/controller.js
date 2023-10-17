@@ -116,6 +116,20 @@ const getCartProducts = async (req, res) => {
   }
 };
 
+const deleteSingleProductFromCart = async (req, res) => {
+  const productId = req.params;
+  const filter = { _id: new ObjectId(productId) };
+  try {
+    await connectdb();
+    const result = await myCartCollection.deleteOne(filter);
+    sendResponse(res, 200, result, "Item deleted successfull ......");
+  } catch (error) {
+    sendResponse(res, 201, {}, "An error accured !!!");
+  } finally {
+    await closedb();
+  }
+};
+
 module.exports = {
   serverResponse,
   insertProduct,
@@ -125,4 +139,5 @@ module.exports = {
   updateProduct,
   insertProductIntoCart,
   getCartProducts,
+  deleteSingleProductFromCart,
 };
